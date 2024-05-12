@@ -1,0 +1,50 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "6ca311c5740c64c2e36867686894a349",
+    "packages": [
+        {
+            "name": "nestboxphp/nestbox",
+            "version": "0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/NestboxPHP/Nestbox.git",
+                "reference": "48c255964cefb972ba24d3e01a19c46a9dcb708c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/NestboxPHP/Nestbox/zipball/48c255964cefb972ba24d3e01a19c46a9dcb708c",
+                "reference": "48c255964cefb972ba24d3e01a19c46a9dcb708c",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nestboxphp\\Nestbox\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0"
+            ],
+            "description": "A PHP Data Objects (PDO) wrapper class for databases manipulations",
+            "support": {
+                "issues": "https://github.com/NestboxPHP/Nestbox/issues",
+                "source": "https://github.com/NestboxPHP/Nestbox/tree/0.0.3"
+            },
+            "time": "2024-05-12T06:46:04+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+}
