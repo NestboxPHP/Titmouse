@@ -1,17 +1,17 @@
 {
-    "name": "nestboxphp/titmouse",
-    "description": "User registration and session management with built-in password best-practices",
-    "type": "library",
-    "require": {
-        "nestboxphp/nestbox": ">=v0.0.1"
-    },
-    "require-dev": {
-        "nestboxphp/nestbox": ">=v0.0.1"
-    },
-    "license": "AGPL-3.0",
-    "autoload": {
-        "psr-4": {
-            "NestboxPHP\\Titmouse\\": "src/"
-        }
+  "name": "nestboxphp/titmouse",
+  "description": "User registration and session management with built-in password best-practices.",
+  "type": "library",
+  "require": {
+    "nestboxphp/nestbox": ">=v0.0.1"
+  },
+  "require-dev": {
+    "nestboxphp/nestbox": ">=v0.0.1"
+  },
+  "license": "AGPL-3.0",
+  "autoload": {
+    "psr-4": {
+      "NestboxPHP\\Titmouse\\": "src/"
     }
+  }
 }
