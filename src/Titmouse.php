@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace NestboxPHP\Nestbox\Titmouse;
+namespace NestboxPHP\Titmouse;
 
 use NestboxPHP\Nestbox\Nestbox;
 
 class Titmouse extends Nestbox
 {
-    final protected const string PACKAGE_NAME = 'titmouse';
+    final protected const PACKAGE_NAME = 'titmouse';
     public string $titmouseUsersTable = 'titmouse_users';
     public string $titmouseUserColumn = 'username';
     public int $titmouseNameLength = 64;
