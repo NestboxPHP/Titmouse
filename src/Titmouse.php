@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NestboxPHP\Titmouse;
 
 use NestboxPHP\Nestbox\Nestbox;
+use NestboxPHP\Titmouse\Exception\TitmouseException;
 
 class Titmouse extends Nestbox
 {
@@ -75,13 +76,14 @@ class Titmouse extends Nestbox
     }
 
 
-    public function register_user(array $userData, string $password): bool
+    public function register_user(array $userData, string $password = null): bool
     {
         // validate user data columns
         $params = [];
-        foreach ($userData as $col => $val) {
-            if (!$this->valid_schema($this->titmouseUsersTable, $col)) continue;
-            $params[$col] = $val;
+        foreach ($userData as $key => $val) {
+            if ("password" == $key && !$password) $password = $val;
+            if (!$this->valid_schema($this->titmouseUsersTable, $key) or "password" == $key) continue;
+            $params[$key] = $val;
         }
 
         // make sure input vars are not too long
@@ -94,7 +96,7 @@ class Titmouse extends Nestbox
             throw new TitmouseException("Email too long.");
         }
 
-        if (0 < (trim($password))) {
+        if (0 < (trim(strval($password)))) {
             throw new TitmouseException("Empty password provided.");
         }
 
@@ -130,6 +132,7 @@ class Titmouse extends Nestbox
     {
         // select user
         $user = $this->select_user($user);
+        if (!$user) throw new TitmouseException("Invalid username or password.");
 
         // login failed
         if (!password_verify($password, $user[$this->titmouseHashColumn])) {
