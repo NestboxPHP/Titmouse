@@ -9,7 +9,7 @@ use NestboxPHP\Titmouse\Exception\TitmouseException;
 
 class Titmouse extends Nestbox
 {
-    final protected const PACKAGE_NAME = 'titmouse';
+    final public const PACKAGE_NAME = 'titmouse';
     public string $titmouseUsersTable = 'titmouse_users';
     public string $titmouseUserColumn = 'username';
     public int $titmouseNameLength = 64;
@@ -190,27 +190,5 @@ class Titmouse extends Nestbox
     {
         // clear out those session variables
         unset($_SESSION[$this->titmouseSessionKey]);
-    }
-
-
-    /**
-     * Settings
-     *  ____       _   _   _
-     * / ___|  ___| |_| |_(_)_ __   __ _ ___
-     * \___ \ / _ \ __| __| | '_ \ / _` / __|
-     *  ___) |  __/ |_| |_| | | | | (_| \__ \
-     * |____/ \___|\__|\__|_|_| |_|\__, |___/
-     *                             |___/
-     */
-
-
-    public function load_settings(string $package = null): array
-    {
-        return parent::load_settings(Titmouse::PACKAGE_NAME);
-    }
-
-    public function save_settings(string $package = null): int|bool
-    {
-        return parent::save_settings(Titmouse::PACKAGE_NAME);
     }
 }
