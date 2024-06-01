@@ -75,14 +75,27 @@ class Titmouse extends Nestbox
         return true;
     }
 
-
-    public function register_user(array $userData, string $password = null): bool
+    /**
+     * Registers a new user via `$userData`, which can have a key of `"password"` to set password, or the password can
+     * be set with the `$password` parameter, and will return `1` on a successful registration, `2` if a duplicate
+     * account exists, or `false` if the account could not be registered
+     *
+     * @param array $userData
+     * @param string|null $password null
+     * @return int|false
+     */
+    public function register_user(array $userData, string $password = null): int|false
     {
         // validate user data columns
         $params = [];
         foreach ($userData as $key => $val) {
-            if ("password" == $key && !$password) $password = $val;
-            if (!$this->valid_schema($this->titmouseUsersTable, $key) or "password" == $key) continue;
+            if ("password" == $key && !$password) {
+                $password = $val;
+                continue;
+            }
+
+            if (!$this->valid_schema($this->titmouseUsersTable, $key)) continue;
+
             $params[$key] = $val;
         }
 
@@ -96,7 +109,7 @@ class Titmouse extends Nestbox
             throw new TitmouseException("Email too long.");
         }
 
-        if (0 < (trim(strval($password)))) {
+        if (0 == (trim(strval($password)))) {
             throw new TitmouseException("Empty password provided.");
         }
 
@@ -104,16 +117,18 @@ class Titmouse extends Nestbox
         $params[$this->titmouseHashColumn] = password_hash($password, PASSWORD_DEFAULT);
 
         // insert new user
-        if (1 === $this->insert($this->titmouseUsersTable, $params)) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->insert($this->titmouseUsersTable, $params);
     }
 
-    public function get_user(string $user): array
+    /**
+     * Returns the row of the specified user, or an empty array if none is found
+     *
+     * @param string $userId
+     * @return array
+     */
+    public function get_user(string $userId): array
     {
-        $results = $this->select($this->titmouseUsersTable, [$this->titmouseUserColumn => $user]);
+        $results = $this->select($this->titmouseUsersTable, [$this->titmouseUserColumn => $userId]);
 
         // invalid user
         if (!$results) {
@@ -128,10 +143,16 @@ class Titmouse extends Nestbox
         return $results[0];
     }
 
+    /**
+     * @param string $user
+     * @param string $password
+     * @param bool $loadToSession
+     * @return array
+     */
     public function login_user(string $user, string $password, bool $loadToSession = true): array
     {
         // select user
-        $user = $this->select_user($user);
+        $user = $this->get_user($user);
         if (!$user) throw new TitmouseException("Invalid username or password.");
 
         // login failed
@@ -143,6 +164,9 @@ class Titmouse extends Nestbox
         if (password_needs_rehash($user[$this->titmouseHashColumn], PASSWORD_DEFAULT)) {
             $this->change_password($user[$this->titmouseUserColumn], $password);
         }
+
+        // log login
+        $this->update_user($user[$this->titmouseUserColumn], ["last_login" => date('Y-m-s H:i:s', time())]);
 
         if (true === $loadToSession) {
             $this->load_user_session($user);
