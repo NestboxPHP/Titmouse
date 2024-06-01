@@ -111,7 +111,7 @@ class Titmouse extends Nestbox
         }
     }
 
-    public function select_user(string $user): array
+    public function get_user(string $user): array
     {
         $results = $this->select($this->titmouseUsersTable, [$this->titmouseUserColumn => $user]);
 
@@ -190,5 +190,10 @@ class Titmouse extends Nestbox
     {
         // clear out those session variables
         unset($_SESSION[$this->titmouseSessionKey]);
+    }
+
+    public function list_users(): array
+    {
+        return $this->select($this->titmouseUsersTable);
     }
 }
