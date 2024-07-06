@@ -84,7 +84,7 @@ class Titmouse extends Nestbox
      * @param string|null $password null
      * @return int|false
      */
-    public function register_user(array $userData, string $password = null): int|false
+    public function register_user(array $userData, #[\SensitiveParameter] string $password = null): int|false
     {
         // validate user data columns
         $params = [];
@@ -149,7 +149,7 @@ class Titmouse extends Nestbox
      * @param bool $loadToSession
      * @return array
      */
-    public function login_user(string $user, string $password, bool $loadToSession = true): array
+    public function login_user(string $user, #[\SensitiveParameter] string $password, bool $loadToSession = true): array
     {
         // select user
         $user = $this->get_user($user);
@@ -194,7 +194,7 @@ class Titmouse extends Nestbox
         return false;
     }
 
-    public function change_password(string $user, string $newPassword): bool
+    public function change_password(string $user, #[\SensitiveParameter] string $newPassword): bool
     {
         $newHashword = password_hash($newPassword, PASSWORD_DEFAULT);
 
